@@ -14,7 +14,18 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/backend/api/$1" },
-    { "src": "/(.*)", "dest": "/frontend/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/api/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|woff|woff2|ttf|eot|ico|json|txt))",
+      "dest": "/frontend/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/index.html",
+      "status": 200
+    }
   ]
 }

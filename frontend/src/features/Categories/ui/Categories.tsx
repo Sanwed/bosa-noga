@@ -1,9 +1,10 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks';
 import { selectCategories, selectCurrentCategory } from '../model/selectors.ts';
 import { useEffect } from 'react';
 import { changeCurrentCategory, sendCategoriesRequest } from '../model/slice.ts';
-import * as style from './Categories.module.css';
-import { sendCatalogRequest } from '../../../../features/Catalog/model/slice.ts';
+import style from './Categories.module.css';
+import { sendCatalogRequest } from '../../Catalog/model/slice.ts';
+import {Button, Nav, NavItem, NavLink} from "react-bootstrap";
 
 function Categories() {
   const dispatch = useAppDispatch();
@@ -20,18 +21,18 @@ function Categories() {
   };
 
   return (
-    <ul className="catalog-categories nav justify-content-center">
+    <Nav className={`${style.catalogCategories} justify-content-center`}>
       {categories.map((category) => (
-        <li key={category.id} className="nav-item">
-          <button
+        <NavItem key={category.id}>
+          <NavLink as="button"
             onClick={() => handleCategoryChange(category.id)}
-            className={`nav-link ${category.id === currentCategoryId ? style.active : ''}`}
+            className={`${category.id === currentCategoryId ? style.active : ''}`}
           >
             {category.title}
-          </button>
-        </li>
+          </NavLink>
+        </NavItem>
       ))}
-    </ul>
+    </Nav>
   );
 }
 

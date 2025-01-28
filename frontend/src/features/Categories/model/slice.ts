@@ -18,7 +18,7 @@ const categoriesSlice = createSlice({
     },
     sendCategoriesSuccess: (state, action: PayloadAction<Category[]>) => {
       state.loading = false;
-      state.categories.push(...action.payload);
+      state.categories = [...initialState.categories, ...action.payload];
     },
     sendCategoriesFailure: (state) => {
       state.loading = false;

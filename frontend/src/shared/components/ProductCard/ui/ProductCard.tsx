@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { Product } from '../../../types/product.ts';
+import {Button, Card, CardBody, Col} from "react-bootstrap";
 
 interface Props {
   product: Product;
@@ -7,18 +8,18 @@ interface Props {
 
 function ProductCard({ product }: Props) {
   return (
-    <div className="col-4">
-      <div className="card">
-        <img className="card-img-top img-fluid" src={product.images[0]} alt={product.title} />
-        <div className="card-body">
-          <p className="card-text">{product.title}</p>
-          <p className="card-text">{product.price}</p>
-          <Link to={`/products/${product.id}`} className="btn btn-outline-primary">
-            Заказать
+    <Col md={4} sm={6} xs={12} className="d-flex">
+      <Card className="h-100 w-100">
+        <Card.Img className="img-fluid" src={product.images[0]} alt={product.title} />
+        <CardBody className="d-flex flex-column justify-content-end">
+          <Card.Title>{product.title}</Card.Title>
+          <Card.Text className="card-text">{product.price}</Card.Text>
+          <Link to={`/products/${product.id}`}>
+            <Button variant="outline-primary">Заказать</Button>
           </Link>
-        </div>
-      </div>
-    </div>
+        </CardBody>
+      </Card>
+    </Col>
   );
 }
 

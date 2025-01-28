@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 import { topSalesSaga } from '../../../features/TopSales';
-import { categoriesSaga } from '../../../shared/components/Categories';
+import { categoriesSaga } from '../../../features/Categories';
 import { catalogSaga } from '../../../features/Catalog';
 
 export function* rootSaga() {

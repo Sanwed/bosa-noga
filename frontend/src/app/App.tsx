@@ -1,11 +1,19 @@
-import { Routes, Route } from 'react-router';
-import { HomePage } from '../pages/HomePage';
+import {Routes, Route} from 'react-router';
+import {HomePage} from '../pages/HomePage';
+import {CatalogPage} from "../pages/CatalogPage";
+import {Header} from "../widgets/Header";
+import {Footer} from "../widgets/Footer";
 
 function App() {
   return (
-    <Routes>
-      <Route index element={<HomePage />} />
-    </Routes>
+    <>
+      <Header/>
+      <Routes>
+        <Route index element={<HomePage/>}/>
+        <Route path="/catalog" element={<CatalogPage/>}/>
+      </Routes>
+      <Footer/>
+    </>
   );
 }
 

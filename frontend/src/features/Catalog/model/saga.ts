@@ -10,19 +10,23 @@ import {
   setNewProducts,
 } from './slice.ts';
 import { selectOffset } from './selectors.ts';
+import {selectSearchValue} from "../../CatalogSearch/model/selectors.ts";
 
-const fetchProducts = async (categoryId: number, offset: number): Promise<Product[]> => {
-  const categoryUrl = categoryId === 11 ? '' : `&categoryId=${categoryId}`;
+const fetchProducts = async (categoryId: number, offset: number, searchValue: string): Promise<Product[]> => {
+  const categoryUrl = categoryId === 11 ? '' : `categoryId=${categoryId}`;
+  const searchUrl = `q=${searchValue}`;
+  const offsetUrl = `offset=${offset}`;
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/items${import.meta.env.VITE_RESPONSE_PREFIX}?offset=${offset}${categoryUrl}`);
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/items${import.meta.env.VITE_RESPONSE_PREFIX}?${offsetUrl}&${searchUrl}&${categoryUrl}`);
   return await response.json();
 };
 
 function* handleFetch(action: PayloadAction<[number, boolean]>) {
   try {
     const [categoryId, loadMore] = action.payload;
+    const searchValue: string = yield select(selectSearchValue);
     const offset: number = yield select(selectOffset);
-    const response: Product[] = yield retry(3, 200, fetchProducts, categoryId, offset);
+    const response: Product[] = yield retry(3, 200, fetchProducts, categoryId, offset, searchValue);
 
     if (loadMore) {
       yield put(sendCatalogLoadMore(response));
