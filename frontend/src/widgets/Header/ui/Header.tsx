@@ -6,6 +6,8 @@ import style from './Header.module.css';
 const paths = [
   {link: '/', name: 'Главная'},
   {link: '/catalog', name: 'Каталог'},
+  {link: '/about', name: 'О магазине'},
+  {link: '/contacts', name: 'Контакты'},
 ]
 
 function Header() {

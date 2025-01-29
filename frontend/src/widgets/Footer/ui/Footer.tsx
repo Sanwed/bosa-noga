@@ -10,8 +10,8 @@ const paths = [
 
 function Footer() {
   return (
-    <footer>
-      <Container className={`bg-light ${style.footer}`}>
+    <footer className="bg-light">
+      <Container className={style.footer}>
         <Row>
           <Col>
             <section>

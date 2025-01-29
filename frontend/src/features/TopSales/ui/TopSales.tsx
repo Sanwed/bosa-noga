@@ -20,7 +20,7 @@ function TopSales() {
     <section className={style.topSales}>
       <h2 className="text-center">Хиты продаж</h2>
       {loading && <Loader />}
-      <div className="row">
+      <div className="row g-4">
         {products.length > 0 &&
           products.map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
