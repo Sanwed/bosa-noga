@@ -1,7 +1,19 @@
-import {Link, NavLink} from "react-router";
-import {Col, Image, Navbar, Row, Container, Nav} from "react-bootstrap";
+import {Link, NavLink, useNavigate} from "react-router";
+import {Image, Navbar, Container, Nav} from "react-bootstrap";
 import headerLogoSrc from '../../../shared/assets/header-logo.png';
 import style from './Header.module.css';
+import {MouseEvent} from "react";
+import {
+  HeaderSearch,
+  setSearchValue,
+  setVisibility,
+  selectHeaderSearchVisibility,
+  selectHeaderSearchValue
+} from "../../../features/HeaderSearch";
+import {useAppDispatch, useAppSelector} from "../../../shared/hooks";
+import {setSearch} from "../../../features/CatalogSearch/model/slice.ts";
+import {sendCatalogRequest} from "../../../features/Catalog/model/slice.ts";
+import {selectCurrentCategory} from "../../../features/Categories";
 
 const paths = [
   {link: '/', name: 'Главная'},
@@ -11,6 +23,35 @@ const paths = [
 ]
 
 function Header() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isSearchVisible = useAppSelector(selectHeaderSearchVisibility)
+  const currentCategory = useAppSelector(selectCurrentCategory);
+  const searchValue = useAppSelector(selectHeaderSearchValue);
+
+  const showSearchForm = () => {
+    dispatch(setVisibility(true));
+  }
+
+  const search = () => {
+    navigate("/catalog");
+    dispatch(setSearch(searchValue));
+    dispatch(sendCatalogRequest([currentCategory, false]))
+    dispatch(setSearchValue(""))
+    dispatch(setVisibility(false));
+  }
+
+  const onSearchClick = () => {
+    if (!isSearchVisible) {
+      showSearchForm();
+    } else if (isSearchVisible && searchValue === "") {
+      dispatch(setVisibility(false));
+    } else if (isSearchVisible && searchValue !== "") {
+      search();
+    }
+  }
+
   return (
     <header>
       <Navbar expand="sm" variant="light" className="bg-light">
@@ -36,10 +77,8 @@ function Header() {
             </Nav>
             <div>
               <div className={style.headerControlsPics}>
-                <div className={`${style.headerControlsPic} ${style.headerControlsSearch}`}>
-                  <form data-id="search-form" className={`${style.headerControlsSearchForm} form-inline`}>
-                    <input type="search" className={style.formControl} placeholder="Поиск"/>
-                  </form>
+                <div onClick={onSearchClick} className={`${style.headerControlsPic} ${style.headerControlsSearch}`}>
+                  {isSearchVisible && <HeaderSearch/>}
                 </div>
                 <div className={`${style.headerControlsPic} ${style.headerControlsCart}`}>
                   <div className={`${style.headerControlsCartFull}`}>1</div>
