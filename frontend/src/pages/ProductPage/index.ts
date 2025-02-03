@@ -1,1 +1,2 @@
-export { ProductPage } from './ui/ProductPage.tsx';
+export { ProductPage } from './ui/ProductPage';
+export { productReducer } from './model/slice';

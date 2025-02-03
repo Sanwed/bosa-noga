@@ -14,7 +14,7 @@ function ProductCard({ product }: Props) {
         <CardBody className="d-flex flex-column justify-content-end">
           <Card.Title>{product.title}</Card.Title>
           <Card.Text className="card-text">{product.price}</Card.Text>
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product.id}/`}>
             <Button variant="outline-primary">Заказать</Button>
           </Link>
         </CardBody>

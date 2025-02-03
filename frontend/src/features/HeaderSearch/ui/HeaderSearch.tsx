@@ -1,8 +1,8 @@
 import style from "./HeaderSearch.module.css";
 import {useAppSelector, useAppDispatch} from "../../../shared/hooks";
 import {selectHeaderSearchValue} from "../model/selectors.ts";
-import {ChangeEvent, useEffect, useRef} from "react";
-import {setSearchValue, setVisibility} from "../model/slice.ts";
+import {ChangeEvent, useEffect, useRef, KeyboardEvent} from "react";
+import {setSearchValue} from "../model/slice.ts";
 
 function HeaderSearch() {
   const dispatch = useAppDispatch();
@@ -21,9 +21,9 @@ function HeaderSearch() {
   }
 
   return (
-    <form onClick={(event) => event.stopPropagation()} data-id="search-form" className={`${style.headerControlsSearchForm} form-inline`}>
-      <input ref={inputRef} onChange={onChange} type="search" className={style.formControl}
-             placeholder="Поиск" value={searchValue}/>
+    <form onClick={(event) => event.stopPropagation()} className={`${style.headerControlsSearchForm} form-inline`}>
+      <input ref={inputRef} onChange={onChange} type="search" className={style.formControl} placeholder="Поиск"
+             value={searchValue}/>
     </form>
   )
 }

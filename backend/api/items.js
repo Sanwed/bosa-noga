@@ -1,4 +1,4 @@
-const items = require('../data/products.json');
+const items = require('../backend/data/products.json');
 
 const itemBasicMapper = (item) => ({
   id: item.id,

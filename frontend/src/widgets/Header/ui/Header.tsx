@@ -2,7 +2,7 @@ import {Link, NavLink, useNavigate} from "react-router";
 import {Image, Navbar, Container, Nav} from "react-bootstrap";
 import headerLogoSrc from '../../../shared/assets/header-logo.png';
 import style from './Header.module.css';
-import {MouseEvent} from "react";
+
 import {
   HeaderSearch,
   setSearchValue,
