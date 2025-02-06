@@ -5,6 +5,7 @@ import { catalogReducer } from '../../../features/Catalog';
 import {catalogSearchReducer} from "../../../features/CatalogSearch";
 import {headerSearchReducer} from "../../../features/HeaderSearch";
 import {productReducer} from "../../../pages/ProductPage/";
+import {cartReducer} from "../../../pages/CartPage";
 
 export const rootReducer = combineReducers({
   topSales: topSalesReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   catalogSearch: catalogSearchReducer,
   headerSearch: headerSearchReducer,
   product: productReducer,
+  cart: cartReducer,
 });

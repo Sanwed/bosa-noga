@@ -1,4 +1,4 @@
-import {Link, useParams} from "react-router";
+import {Link, useNavigate, useParams} from "react-router";
 import {Fragment, useEffect, MouseEvent} from "react";
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks";
 import {chooseSize, increaseCount, decreaseCount, sendProductRequest, resetStore} from "../model/slice.ts";
@@ -6,11 +6,25 @@ import {Button, ButtonGroup, Col, Row, Table} from "react-bootstrap";
 import {Banner, Loader} from "../../../shared/components";
 import style from './ProductPage.module.css';
 import {selectProductData} from "../model/selectors.ts";
+import {addToCart} from "../../CartPage";
 
 function ProductPage() {
   const {productId} = useParams();
   const dispatch = useAppDispatch();
   const {product, loading, chosenSize, count} = useAppSelector(selectProductData);
+  const navigate = useNavigate();
+  const onCartAdd = () => {
+    if (!product) return;
+
+    dispatch(addToCart({
+      id: product.id,
+      title: product.title,
+      size: chosenSize as string,
+      count: count,
+      price: product.price,
+    }));
+    navigate('/cart/');
+  }
 
   useEffect(() => {
     if (productId) {
@@ -105,10 +119,8 @@ function ProductPage() {
                     )}
                   </div>
                   {hasAvailableSizes() && (
-                    <Button variant="danger" className="w-100" size="lg" disabled={isAddCartButtonDisabled()}>
-                      <Link to="/cart">
-                        В корзину
-                      </Link>
+                    <Button onClick={onCartAdd} variant="danger" className="w-100" size="lg" disabled={isAddCartButtonDisabled()}>
+                      В корзину
                     </Button>
                   )}
                 </Col>

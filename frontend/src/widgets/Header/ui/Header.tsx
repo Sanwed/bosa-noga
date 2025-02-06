@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from "../../../shared/hooks";
 import {setSearch} from "../../../features/CatalogSearch/model/slice.ts";
 import {sendCatalogRequest} from "../../../features/Catalog/model/slice.ts";
 import {selectCurrentCategory} from "../../../features/Categories";
+import {selectCartData} from "../../../pages/CartPage/model/selectors.ts";
 
 const paths = [
   {link: '/', name: 'Главная'},
@@ -29,13 +30,14 @@ function Header() {
   const isSearchVisible = useAppSelector(selectHeaderSearchVisibility)
   const currentCategory = useAppSelector(selectCurrentCategory);
   const searchValue = useAppSelector(selectHeaderSearchValue);
+  const {totalCount} = useAppSelector(selectCartData);
 
   const showSearchForm = () => {
     dispatch(setVisibility(true));
   }
 
   const search = () => {
-    navigate("/catalog");
+    navigate("/catalog/");
     dispatch(setSearch(searchValue));
     dispatch(sendCatalogRequest([currentCategory, false]))
     dispatch(setSearchValue(""))
@@ -80,9 +82,13 @@ function Header() {
                 <div onClick={onSearchClick} className={`${style.headerControlsPic} ${style.headerControlsSearch}`}>
                   {isSearchVisible && <HeaderSearch/>}
                 </div>
-                <div className={`${style.headerControlsPic} ${style.headerControlsCart}`}>
-                  <div className={`${style.headerControlsCartFull}`}>1</div>
-                </div>
+                <Link to="/cart/">
+                  <div className={`${style.headerControlsPic} ${style.headerControlsCart}`}>
+                    {totalCount > 0 && (
+                      <div className={`${style.headerControlsCartFull}`}>{totalCount}</div>
+                    )}
+                  </div>
+                </Link>
               </div>
             </div>
           </Navbar.Collapse>
