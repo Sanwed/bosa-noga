@@ -1,4 +1,4 @@
-import { CartProduct, CartRequest, State } from '../../types/cart.ts';
+import { CartProduct } from '../../types/cart.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface State {
@@ -60,7 +60,7 @@ const cartSlice = createSlice({
       state.totalPrice = action.payload.totalPrice;
       state.totalCount = action.payload.totalCount;
     },
-    sendCartRequest: (state, action: PayloadAction<CartRequest>) => {
+    sendCartRequest: (state) => {
       state.loading = true;
       state.orderStatus = null;
     },

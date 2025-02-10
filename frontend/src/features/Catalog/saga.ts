@@ -40,6 +40,7 @@ function* handleFetch(action: PayloadAction<[number, boolean]>) {
     }
     yield put(setNewProducts(response));
   } catch (error) {
+    console.error(error);
     yield put(sendCatalogFailure());
   }
 }

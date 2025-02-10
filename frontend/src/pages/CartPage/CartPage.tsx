@@ -1,6 +1,16 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { removeFromCart, sendCartRequest } from './slice.ts';
-import { Button, Card, CardBody, Col, Container, FormControl, FormGroup, Row, Table } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Container,
+  FormControl,
+  FormGroup,
+  Row,
+  Table,
+} from 'react-bootstrap';
 import { Banner, Loader } from '../../components';
 import { Link } from 'react-router';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { changeCurrentCategory, sendCategoriesRequest } from './slice.ts';
 import style from './Categories.module.css';
 import { sendCatalogRequest } from '../Catalog/slice.ts';
-import { Button, Nav, NavItem, NavLink } from 'react-bootstrap';
+import { Nav, NavItem, NavLink } from 'react-bootstrap';
 
 function Categories() {
   const dispatch = useAppDispatch();

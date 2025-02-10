@@ -119,7 +119,7 @@ function ProductPage() {
                       ))}
                     </p>
                     {hasAvailableSizes() && (
-                      <div className='mb-4 d-flex gap-2 justify-content-center'>
+                      <div className="mb-4 d-flex gap-2 justify-content-center">
                         Количество:
                         <ButtonGroup size="sm" className="pl-2">
                           <Button onClick={onDecrease} variant="secondary">

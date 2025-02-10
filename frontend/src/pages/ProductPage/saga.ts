@@ -12,6 +12,7 @@ function* handleFetch(action: PayloadAction<string>) {
     const response: ProductAdvanced = yield retry(3, 200, fetchProduct, action.payload);
     yield put(sendProductSuccess(response));
   } catch (error) {
+    console.error(error);
     yield put(sendProductFailure());
   }
 }

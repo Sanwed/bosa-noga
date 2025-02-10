@@ -4,7 +4,6 @@ interface State {
   search: string;
 }
 
-
 const initialState: State = {
   search: '',
 };

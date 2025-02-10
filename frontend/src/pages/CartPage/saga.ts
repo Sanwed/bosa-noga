@@ -20,6 +20,7 @@ function* handleFetch(action: PayloadAction<CartRequest>) {
     yield put(sendCartSuccess());
     yield put(removeAllProducts());
   } catch (error) {
+    console.error(error);
     yield put(sendCartFailure());
   }
 }

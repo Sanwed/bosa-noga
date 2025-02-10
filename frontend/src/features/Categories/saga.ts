@@ -11,6 +11,7 @@ function* handleFetch() {
     const response: Category[] = yield retry(3, 200, fetchTopSales);
     yield put(sendCategoriesSuccess(response));
   } catch (error) {
+    console.error(error);
     yield put(sendCategoriesFailure());
   }
 }

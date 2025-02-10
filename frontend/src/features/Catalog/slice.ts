@@ -43,7 +43,7 @@ const catalogSlice = createSlice({
     setNewProducts: (state, action: PayloadAction<Product[]>) => {
       state.lastLoadedProducts = action.payload;
     },
-    changeOffset(state, action: PayloadAction<number>) {
+    changeOffset(state) {
       state.offset = state.offset + 6;
     },
   },
