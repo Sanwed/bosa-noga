@@ -1,1 +1,1 @@
-export { CatalogPage } from './ui/CatalogPage.tsx';
+export { CatalogPage } from './CatalogPage.tsx';

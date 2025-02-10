@@ -1,3 +1,3 @@
-export { TopSales } from './ui/TopSales';
-export { topSalesReducer } from './model/slice';
-export { topSalesSaga } from './model/saga';
+export { TopSales } from './TopSales.tsx';
+export { topSalesReducer } from './slice.ts';
+export { topSalesSaga } from './saga.ts';

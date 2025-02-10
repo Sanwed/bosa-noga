@@ -1,3 +1,3 @@
-export { Catalog } from './ui/Catalog';
-export { catalogReducer } from './model/slice';
-export { catalogSaga } from './model/saga';
+export { Catalog } from './Catalog.tsx';
+export { catalogReducer } from './slice.ts';
+export { catalogSaga } from './saga.ts';
