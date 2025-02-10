@@ -1,0 +1,35 @@
+.banner {
+  position: relative;
+}
+
+.bannerHeader {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: 15%;
+  padding: 0 50px;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 98px;
+  text-align: center;
+  color: #ffffff;
+  background: linear-gradient(
+    270deg,
+    rgba(161, 179, 191, 0.8) 72.59%,
+    rgba(161, 179, 191, 0) 98.05%
+  );
+}
+
+@media (max-width: 767px) {
+  .bannerHeader {
+    font-size: 24px;
+    line-height: 48px;
+  }
+}
+
+@media (max-width: 479px) {
+  .bannerHeader {
+    font-size: 18px;
+    line-height: 32px;
+  }
+}

@@ -1,0 +1,57 @@
+.headerControlsPics {
+  display: flex;
+  justify-content: space-between;
+  max-width: 280px;
+  margin-left: auto;
+}
+
+.headerControlsPic {
+  height: 32px;
+  width: 32px;
+  margin: 0 10px;
+  background-image: url('../../assets/header-controls-sprite.png');
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.headerControlsSearch {
+  position: relative;
+  z-index: 1;
+  background-position: -64px 0;
+}
+
+.headerControlsProfile {
+  position: relative;
+  background-position: -32px 0;
+}
+
+.headerControlsCart {
+  position: relative;
+  background-position: 0 0;
+}
+
+.headerControlsCartFull {
+  position: absolute;
+  right: -10px;
+  top: -5px;
+  display: block;
+  height: 21px;
+  width: 21px;
+  font-size: 11px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #ff65a5 1.11%, #ff8076 100%);
+  box-shadow:
+    0px 2px 8px rgba(255, 101, 165, 0.6),
+    inset 0px 1px 1px #ff8076;
+}
+
+@media (max-width: 767px) {
+  .headerControlsPics {
+    margin-left: 0;
+    justify-content: center;
+    max-width: 100%;
+  }
+}

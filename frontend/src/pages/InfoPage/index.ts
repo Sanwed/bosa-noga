@@ -1,1 +1,1 @@
-export { InfoPage } from './ui/InfoPage.tsx';
+export { InfoPage } from './InfoPage.tsx';

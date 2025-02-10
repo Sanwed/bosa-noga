@@ -1,3 +1,3 @@
-export { CartPage } from './ui/CartPage.tsx';
-export { addToCart, setCartState, removeFromCart, cartReducer} from './model/slice.ts';
-export {cartSaga} from './model/saga.ts'
+export { CartPage } from './CartPage.tsx';
+export { addToCart, setCartState, removeFromCart, cartReducer } from './slice.ts';
+export { cartSaga } from './saga.ts';

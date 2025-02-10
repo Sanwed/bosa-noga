@@ -1,4 +1,3 @@
-export { Categories } from './ui/Categories.tsx';
-export { categoriesReducer } from './model/slice.ts';
-export { categoriesSaga } from './model/saga.ts';
-export { selectCurrentCategory } from './model/selectors.ts';
+export { Categories } from './Categories.tsx';
+export { categoriesReducer } from './slice.ts';
+export { categoriesSaga } from './saga.ts';

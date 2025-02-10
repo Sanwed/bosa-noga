@@ -1,2 +1,2 @@
-export {CatalogSearch} from './ui/CatalogSearch.tsx';
-export {catalogSearchReducer} from './model/slice';
+export { CatalogSearch } from './CatalogSearch.tsx';
+export { catalogSearchReducer } from './slice.ts';
