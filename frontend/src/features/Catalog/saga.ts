@@ -7,7 +7,7 @@ import {
   sendCatalogRequest,
   changeOffset,
   sendCatalogLoadMore,
-  setNewProducts,
+  setNewProducts, sendCatalogLoadMoreFailure,
 } from './slice.ts';
 import { RootState } from '../../app/store.ts';
 
@@ -27,8 +27,8 @@ const fetchProducts = async (
 };
 
 function* handleFetch(action: PayloadAction<[number, boolean]>) {
+  const [categoryId, loadMore] = action.payload;
   try {
-    const [categoryId, loadMore] = action.payload;
     const searchValue: string = yield select((state: RootState) => state.catalogSearch.search);
     const offset: number = yield select((state: RootState) => state.catalog.offset);
     const response: Product[] = yield retry(3, 200, fetchProducts, categoryId, offset, searchValue);
@@ -41,7 +41,11 @@ function* handleFetch(action: PayloadAction<[number, boolean]>) {
     yield put(setNewProducts(response));
   } catch (error) {
     console.error(error);
-    yield put(sendCatalogFailure());
+    if (loadMore) {
+      yield put(sendCatalogLoadMoreFailure())
+    } else {
+      yield put(sendCatalogFailure());
+    }
   }
 }
 

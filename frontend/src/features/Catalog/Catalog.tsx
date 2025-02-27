@@ -13,25 +13,33 @@ interface Props {
 
 function Catalog({ hasSearch = false }: Props) {
   const dispatch = useAppDispatch();
-  const { products, lastLoadedProducts, loading, error } = useAppSelector((state) => state.catalog);
+  const { products, lastLoadedProducts, loading, loaderTop, error, loadMoreError } = useAppSelector((state) => state.catalog);
+  const {search, memoizedSearch} = useAppSelector((state) => state.catalogSearch)
   const currentCategory = useAppSelector((state) => state.categories.currentCategoryId);
 
   useEffect(() => {
     dispatch(sendCatalogRequest([currentCategory, false]));
   }, [dispatch, currentCategory]);
 
+  const handleTryAgain = (loadMore: boolean) => {
+    dispatch(sendCatalogRequest([currentCategory, loadMore]));
+  }
+
   const handleLoadMore = () => {
     dispatch(changeOffset(currentCategory));
   };
-
-  if (error) return;
 
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
       {hasSearch && <CatalogSearch />}
       <Categories />
-      {products.length > 0 && (
+      {error && (<>
+        <p className="text-center my-2">Что-то пошло не так, попробуйте еще раз</p>
+        <Button onClick={() => handleTryAgain(false)} style={{margin: '0 auto', display: 'block'}} variant="danger">Попробовать еще раз</Button>
+      </>)}
+      {loading && loaderTop && <Loader />}
+      {products.length > 0 ? (
         <>
           <Container fluid>
             <Row className="g-4 mb-4">
@@ -40,7 +48,12 @@ function Catalog({ hasSearch = false }: Props) {
               ))}
             </Row>
           </Container>
-          {lastLoadedProducts.length !== 0 && (
+          {loading && !loaderTop && <Loader />}
+          {loadMoreError && (<>
+            <p className="text-center my-2">Что-то пошло не так во время загрузки товаров, попробуйте еще раз</p>
+            <Button onClick={() => handleTryAgain(true)} style={{margin: '0 auto', display: 'block'}} variant="danger">Попробовать еще раз</Button>
+          </>)}
+          {!loadMoreError && lastLoadedProducts.length !== 0 && (
             <div className="text-center">
               <Button variant="outline-primary" onClick={handleLoadMore}>
                 Загрузить ещё
@@ -48,8 +61,7 @@ function Catalog({ hasSearch = false }: Props) {
             </div>
           )}
         </>
-      )}
-      {loading && <Loader />}
+      ) : !error && <p>Товаров по запросу {memoizedSearch} не найдено</p>}
     </section>
   );
 }

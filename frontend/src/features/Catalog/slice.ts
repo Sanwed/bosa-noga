@@ -6,7 +6,9 @@ interface State {
   lastLoadedProducts: Product[];
   loading: boolean;
   error: boolean;
+  loadMoreError: boolean;
   offset: number;
+  loaderTop?: boolean;
 }
 
 const initialState: State = {
@@ -15,6 +17,7 @@ const initialState: State = {
   loading: false,
   error: false,
   offset: 0,
+  loaderTop: true,
 };
 
 const catalogSlice = createSlice({
@@ -24,8 +27,12 @@ const catalogSlice = createSlice({
     sendCatalogRequest: (state, action: PayloadAction<[number, boolean]>) => {
       state.loading = true;
       state.error = false;
+      state.loadMoreError = false;
       if (!action.payload[1]) {
         state.offset = 0;
+        state.loaderTop = true;
+      } else {
+        state.loaderTop = false;
       }
     },
     sendCatalogSuccess: (state, action: PayloadAction<Product[]>) => {
@@ -36,6 +43,10 @@ const catalogSlice = createSlice({
       state.loading = false;
       state.products.push(...action.payload);
     },
+    sendCatalogLoadMoreFailure: (state) => {
+      state.loading = false;
+      state.loadMoreError = true;
+    },
     sendCatalogFailure: (state) => {
       state.loading = false;
       state.error = true;
@@ -43,7 +54,7 @@ const catalogSlice = createSlice({
     setNewProducts: (state, action: PayloadAction<Product[]>) => {
       state.lastLoadedProducts = action.payload;
     },
-    changeOffset(state) {
+    changeOffset(state, action: PayloadAction<number>) {
       state.offset = state.offset + 6;
     },
   },
@@ -53,6 +64,7 @@ export const {
   sendCatalogRequest,
   sendCatalogLoadMore,
   sendCatalogSuccess,
+  sendCatalogLoadMoreFailure,
   sendCatalogFailure,
   setNewProducts,
   changeOffset,

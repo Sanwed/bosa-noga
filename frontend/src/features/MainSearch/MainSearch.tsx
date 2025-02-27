@@ -29,7 +29,6 @@ function MainSearch({ className = '' }: Props) {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchValue(event.target.value));
   };
-
   const onSearch = () => {
     if (!isSearchVisible) {
       dispatch(setVisibility(true));
@@ -44,6 +43,13 @@ function MainSearch({ className = '' }: Props) {
     }
   };
 
+  const onEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSearch();
+    }
+  }
+
+
   return (
     <button tabIndex={0} className={`${className} ${style.mainSearch}`} onClick={onSearch}>
       {isSearchVisible && (
@@ -54,6 +60,7 @@ function MainSearch({ className = '' }: Props) {
           <input
             ref={inputRef}
             onChange={onChange}
+            onKeyDown={onEnter}
             type="search"
             className={style.formControl}
             placeholder="Поиск"
