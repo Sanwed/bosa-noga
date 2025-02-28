@@ -13,7 +13,7 @@ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    sendProductRequest: (state) => {
+    sendProductRequest: (state, action: PayloadAction<string>) => {
       state.loading = true;
       state.error = false;
     },

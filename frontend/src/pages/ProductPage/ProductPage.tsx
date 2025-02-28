@@ -9,14 +9,14 @@ import {
   resetStore,
 } from './slice.ts';
 import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
-import { Banner, Loader } from '../../components';
+import {Banner, Loader, TryAgain} from '../../components';
 import style from './ProductPage.module.css';
 import { addToCart } from '../CartPage';
 
 function ProductPage() {
   const { productId } = useParams();
   const dispatch = useAppDispatch();
-  const { product, loading, chosenSize, count } = useAppSelector((state) => state.product);
+  const { product, loading, chosenSize, count, error } = useAppSelector((state) => state.product);
   const navigate = useNavigate();
   const onCartAdd = () => {
     if (!product) return;
@@ -43,6 +43,12 @@ function ProductPage() {
     };
   }, [productId, dispatch]);
 
+  const handleRetry = () => {
+    if (productId) {
+      dispatch(sendProductRequest(productId));
+    }
+  }
+
   const isChosen = (size: string) => chosenSize === size;
   const onSizeChoose = (event: MouseEvent<HTMLSpanElement>) => {
     const target = event.target as HTMLSpanElement;
@@ -66,6 +72,7 @@ function ProductPage() {
         <Col>
           <Banner />
           {loading && <Loader />}
+          {error && <TryAgain onClick={handleRetry} />}
           {!loading && product && (
             <section className={style.catalogItem}>
               <h2 className="text-center mb-4">{product.title}</h2>

@@ -1,12 +1,13 @@
-import { CartProduct } from '../../types/cart.ts';
+import {CartProduct, CartRequest} from '../../types/cart.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {CartRequestTypes} from "../../types/enums.ts";
 
 interface State {
   totalPrice: number;
   products: CartProduct[];
   totalCount: number;
   loading: boolean;
-  orderStatus: 'complete' | 'failed' | null;
+  orderStatus: CartRequestTypes | null;
 }
 
 const initialState: State = {
@@ -60,17 +61,17 @@ const cartSlice = createSlice({
       state.totalPrice = action.payload.totalPrice;
       state.totalCount = action.payload.totalCount;
     },
-    sendCartRequest: (state) => {
+    sendCartRequest: (state, action: PayloadAction<CartRequest>) => {
       state.loading = true;
       state.orderStatus = null;
     },
     sendCartSuccess: (state) => {
       state.loading = false;
-      state.orderStatus = 'complete';
+      state.orderStatus = CartRequestTypes.SUCCESS;
     },
     sendCartFailure: (state) => {
       state.loading = false;
-      state.orderStatus = 'failed';
+      state.orderStatus = CartRequestTypes.FAILURE;
     },
     removeAllProducts: (state) => {
       state.products = [];

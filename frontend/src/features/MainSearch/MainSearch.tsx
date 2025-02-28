@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { setSearchValue, setVisibility } from './slice.ts';
 import { useNavigate } from 'react-router';
-import { setSearch } from '../CatalogSearch/slice.ts';
+import {setMemoizedSearch, setSearch} from '../CatalogSearch/slice.ts';
 import { sendCatalogRequest } from '../Catalog/slice.ts';
 
 interface Props {
@@ -37,6 +37,7 @@ function MainSearch({ className = '' }: Props) {
     } else if (isSearchVisible && searchValue !== '') {
       navigate('/catalog/');
       dispatch(setSearch(searchValue));
+      dispatch(setMemoizedSearch(searchValue));
       dispatch(sendCatalogRequest([currentCategoryId, false]));
       dispatch(setSearchValue(''));
       dispatch(setVisibility(false));

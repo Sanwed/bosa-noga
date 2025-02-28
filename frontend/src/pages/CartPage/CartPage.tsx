@@ -16,6 +16,7 @@ import { Link } from 'react-router';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import {CartRequestTypes} from "../../types/enums.ts";
 
 function CartPage() {
   const dispatch = useAppDispatch();
@@ -49,7 +50,7 @@ function CartPage() {
         })),
       }),
     );
-    if (!loading && orderStatus === 'complete') {
+    if (!loading && orderStatus === CartRequestTypes.SUCCESS) {
       setForm({
         phone: '',
         address: '',
@@ -118,8 +119,8 @@ function CartPage() {
           <section>
             <h2 className="text-center">Оформить заказ</h2>
             {loading && <Loader />}
-            {!loading && orderStatus === 'complete' && <p>Заказ успешно отправлен</p>}
-            {!loading && orderStatus === 'failed' && (
+            {!loading && orderStatus === CartRequestTypes.SUCCESS && <p>Заказ успешно отправлен</p>}
+            {!loading && orderStatus === CartRequestTypes.FAILURE && (
               <p>К сожалению произошла ошибка, попробуйте еще раз</p>
             )}
             <Card style={{ maxWidth: '30rem', margin: '0 auto' }}>

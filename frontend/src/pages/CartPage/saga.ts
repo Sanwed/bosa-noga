@@ -4,13 +4,17 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { removeAllProducts, sendCartFailure, sendCartRequest, sendCartSuccess } from './slice.ts';
 
 const sendCartData = async (body: CartRequest) => {
-  await fetch(`${import.meta.env.VITE_API_URL}/order`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/order`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
     },
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
 };
 
 function* handleFetch(action: PayloadAction<CartRequest>) {
