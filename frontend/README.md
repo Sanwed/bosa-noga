@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+# Bosa Noga
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Интернет магазин обуви, соданный для демонстрации умения работы с React
 
-Currently, two official plugins are available:
+**На данный момент проект доступен для локаольного просмотра**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Технологии проекта
+- React
+- React router
+- Redux
+- Redux Saga
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
+## Функционал проекта
+- Взаимодействие с кастомным сервером с моковыми данными для получения и вывода их на страницу
+- На главной странице доступны 2 раздела: **Лучшие товары** и версия **Каталога** для главной страницы
+- Каталог включает в себя товары, являющиеся ссылками для перехода на детальную страницу товара
+- Применен SPA подход, в случае ошибки загрузки блока, есть возможность отправить запрос заново без перезагрузки страницы
+- На детальной странице товара можно выбрать размер и добавить товар в корзину
+- Со страницы корзины можно оформить заказ
+- Корзина сохраняется с помощью localStorage
+- Для каталога доступен поиск и шапки страницы и на детальной странице каталога
