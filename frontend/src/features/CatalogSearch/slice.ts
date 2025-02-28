@@ -19,7 +19,7 @@ const catalogSearchSlice = createSlice({
     },
     setMemoizedSearch: (state, action: PayloadAction<string>) => {
       state.memoizedSearch = action.payload;
-    }
+    },
   },
 });
 

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ChangeEvent, KeyboardEvent } from 'react';
-import {setMemoizedSearch, setmemoizedSearch, setSearch} from './slice.ts';
+import { setMemoizedSearch, setSearch } from './slice.ts';
 import { sendCatalogRequest } from '../Catalog/slice.ts';
 import { FormControl } from 'react-bootstrap';
 
@@ -14,7 +14,7 @@ function CatalogSearch() {
   };
 
   const onSearch = () => {
-    dispatch(setMemoizedSearch(searchValue))
+    dispatch(setMemoizedSearch(searchValue));
     dispatch(sendCatalogRequest([currentCategoryId, false]));
   };
 

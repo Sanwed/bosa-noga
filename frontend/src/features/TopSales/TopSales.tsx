@@ -1,4 +1,4 @@
-import {Loader, TryAgain} from '../../components';
+import { Loader, TryAgain } from '../../components';
 import style from './TopSales.module.css';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -16,7 +16,7 @@ function TopSales() {
 
   const handleRetry = () => {
     dispatch(sendTopSalesRequest());
-  }
+  };
 
   return (
     <section className={style.topSales}>

@@ -1,6 +1,6 @@
 import { retry, put, takeLatest, spawn } from 'redux-saga/effects';
 import { sendCategoriesFailure, sendCategoriesRequest, sendCategoriesSuccess } from './slice.ts';
-import {Category} from "../../types/category.ts";
+import { Category } from '../../types/category.ts';
 
 async function fetchTopSales(): Promise<Category[]> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);

@@ -1,6 +1,6 @@
-import {CartProduct, CartRequest} from '../../types/cart.ts';
+import { CartProduct, CartRequest } from '../../types/cart.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {CartRequestTypes} from "../../types/enums.ts";
+import { CartRequestTypes } from '../../types/enums.ts';
 
 interface State {
   totalPrice: number;

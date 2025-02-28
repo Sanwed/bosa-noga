@@ -6,7 +6,7 @@ import { changeOffset, sendCatalogRequest } from './slice.ts';
 import { ProductCard } from '../../components';
 import { CatalogSearch } from '../CatalogSearch';
 import { Button, Container, Row } from 'react-bootstrap';
-import {sendCategoriesRequest} from "../Categories/slice.ts";
+import { sendCategoriesRequest } from '../Categories/slice.ts';
 
 interface Props {
   hasSearch?: boolean;
@@ -17,7 +17,7 @@ function Catalog({ hasSearch = false }: Props) {
   const { products, lastLoadedProducts, loading, loaderTop, error, loadMoreError } = useAppSelector(
     (state) => state.catalog,
   );
-  const {error: categoryError} = useAppSelector((state) => state.categories)
+  const { error: categoryError } = useAppSelector((state) => state.categories);
   const memoizedSearch = useAppSelector((state) => state.catalogSearch.memoizedSearch);
   const currentCategory = useAppSelector((state) => state.categories.currentCategoryId);
 

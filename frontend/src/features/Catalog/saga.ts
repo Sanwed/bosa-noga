@@ -7,7 +7,8 @@ import {
   sendCatalogRequest,
   changeOffset,
   sendCatalogLoadMore,
-  setNewProducts, sendCatalogLoadMoreFailure,
+  setNewProducts,
+  sendCatalogLoadMoreFailure,
 } from './slice.ts';
 import { RootState } from '../../app/store.ts';
 
@@ -42,7 +43,7 @@ function* handleFetch(action: PayloadAction<[number, boolean]>) {
   } catch (error) {
     console.error(error);
     if (loadMore) {
-      yield put(sendCatalogLoadMoreFailure())
+      yield put(sendCatalogLoadMoreFailure());
     } else {
       yield put(sendCatalogFailure());
     }

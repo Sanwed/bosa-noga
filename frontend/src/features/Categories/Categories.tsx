@@ -12,7 +12,7 @@ function Categories() {
   const { categories, currentCategoryId, loading, error } = useAppSelector(
     (state) => state.categories,
   );
-  const {error: catalogError} = useAppSelector((state) => state.catalog);
+  const { error: catalogError } = useAppSelector((state) => state.catalog);
 
   useEffect(() => {
     dispatch(sendCategoriesRequest());
@@ -33,7 +33,13 @@ function Categories() {
   return (
     <Nav className={`${style.catalogCategories} justify-content-center`}>
       {loading && 'Загрузка категорий...'}
-      {error && <TryAgain onClick={handleCategoryRetry} type={TryAgainTypes.SMALL} buttonText="Загрузить категории"/>}
+      {error && (
+        <TryAgain
+          onClick={handleCategoryRetry}
+          type={TryAgainTypes.SMALL}
+          buttonText="Загрузить категории"
+        />
+      )}
       {!error &&
         !loading &&
         categories.map((category) => (

@@ -9,7 +9,12 @@ interface Props {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-function TryAgain({ children, onClick, buttonText = 'Попробовать еще раз', type = TryAgainTypes.DEFAULT }: Props) {
+function TryAgain({
+  children,
+  onClick,
+  buttonText = 'Попробовать еще раз',
+  type = TryAgainTypes.DEFAULT,
+}: Props) {
   return (
     <>
       {type === TryAgainTypes.DEFAULT && (

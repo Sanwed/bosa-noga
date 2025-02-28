@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { ChangeEvent, useEffect, useRef } from 'react';
 import { setSearchValue, setVisibility } from './slice.ts';
 import { useNavigate } from 'react-router';
-import {setMemoizedSearch, setSearch} from '../CatalogSearch/slice.ts';
+import { setMemoizedSearch, setSearch } from '../CatalogSearch/slice.ts';
 import { sendCatalogRequest } from '../Catalog/slice.ts';
 
 interface Props {
@@ -48,8 +48,7 @@ function MainSearch({ className = '' }: Props) {
     if (event.key === 'Enter') {
       onSearch();
     }
-  }
-
+  };
 
   return (
     <button tabIndex={0} className={`${className} ${style.mainSearch}`} onClick={onSearch}>

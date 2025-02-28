@@ -16,7 +16,7 @@ import { Link } from 'react-router';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import {CartRequestTypes} from "../../types/enums.ts";
+import { CartRequestTypes } from '../../types/enums.ts';
 
 function CartPage() {
   const dispatch = useAppDispatch();

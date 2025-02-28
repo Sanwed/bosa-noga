@@ -9,7 +9,7 @@ import {
   resetStore,
 } from './slice.ts';
 import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
-import {Banner, Loader, TryAgain} from '../../components';
+import { Banner, Loader, TryAgain } from '../../components';
 import style from './ProductPage.module.css';
 import { addToCart } from '../CartPage';
 
@@ -47,7 +47,7 @@ function ProductPage() {
     if (productId) {
       dispatch(sendProductRequest(productId));
     }
-  }
+  };
 
   const isChosen = (size: string) => chosenSize === size;
   const onSizeChoose = (event: MouseEvent<HTMLSpanElement>) => {
