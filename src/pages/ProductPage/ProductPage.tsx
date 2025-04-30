@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router';
-import { Fragment, useEffect, MouseEvent } from 'react';
+import { Fragment, useEffect, MouseEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   chooseSize,
@@ -21,6 +21,7 @@ import 'swiper/css/pagination';
 
 function ProductPage() {
   const { productId } = useParams();
+  const [availableSizes, setAvailableSizes] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const { product, loading, chosenSize, count, error } = useAppSelector((state) => state.product);
   const navigate = useNavigate();
@@ -39,18 +40,18 @@ function ProductPage() {
     navigate('/cart/');
   };
 
-  let availableSizes = [];
+  useEffect(() => {
+    if (product) {
+      setAvailableSizes(product.sizes.filter((size) => size.available));
+      if (availableSizes.length === 1) {
+        dispatch(chooseSize(availableSizes[0].size));
+      }
+    }
+  }, [availableSizes, dispatch, product]);
 
   useEffect(() => {
     if (productId) {
       dispatch(sendProductRequest(productId));
-    }
-
-    if (product) {
-      availableSizes = [...product.sizes.filter((size) => size.available)];
-      if (availableSizes.length === 1) {
-        dispatch(chooseSize(availableSizes[0].size));
-      }
     }
 
     return () => {
