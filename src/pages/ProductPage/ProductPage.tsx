@@ -39,15 +39,18 @@ function ProductPage() {
     navigate('/cart/');
   };
 
-  const availableSizes = product?.sizes.filter((size) => size.available);
-
-  if (availableSizes?.length === 1) {
-    dispatch(chooseSize(availableSizes[0].size));
-  }
+  let availableSizes = [];
 
   useEffect(() => {
     if (productId) {
       dispatch(sendProductRequest(productId));
+    }
+
+    if (product) {
+      availableSizes = [...product.sizes.filter((size) => size.available)];
+      if (availableSizes.length === 1) {
+        dispatch(chooseSize(availableSizes[0].size));
+      }
     }
 
     return () => {
