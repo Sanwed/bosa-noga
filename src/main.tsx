@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/bosa-noga'>
       <Provider store={store}>
         <App />
       </Provider>
