@@ -10,8 +10,14 @@ import {
 } from './slice.ts';
 import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
 import { Banner, Loader, TryAgain } from '../../components';
-import style from './ProductPage.module.css';
 import { addToCart } from '../CartPage';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, A11y } from 'swiper/modules';
+
+import style from './ProductPage.module.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 function ProductPage() {
   const { productId } = useParams();
@@ -32,6 +38,12 @@ function ProductPage() {
     );
     navigate('/cart/');
   };
+
+  const availableSizes = product?.sizes.filter((size) => size.available);
+
+  if (availableSizes?.length === 1) {
+    dispatch(chooseSize(availableSizes[0].size));
+  }
 
   useEffect(() => {
     if (productId) {
@@ -78,7 +90,18 @@ function ProductPage() {
               <h2 className="text-center mb-4">{product.title}</h2>
               <Row>
                 <Col md={5}>
-                  <img src={product.images[0]} alt={product.title} />
+                  <Swiper
+                    modules={[Navigation, Pagination, A11y]}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true }}
+                  >
+                    {product.images.map((image: string) => (
+                      <SwiperSlide key={image} className={style.catalogItemImage}>
+                        <img src={image} alt={product.title} />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
                 </Col>
                 <Col md={7}>
                   <Table bordered>
@@ -111,19 +134,30 @@ function ProductPage() {
                   </Table>
                   <div className="text-center">
                     <p>
-                      Размеры в наличии:
-                      {product.sizes.map((size) => (
-                        <Fragment key={size.size}>
-                          {size.available && (
-                            <span
-                              onClick={onSizeChoose}
-                              className={`${style.catalogItemSize} ${isChosen(size.size) ? style.selected : ''}`}
-                            >
-                              {size.size}
+                      <span>Размеры в наличии: </span>
+                      {availableSizes.length === 0 && <span>Нет в наличии</span>}
+                      {availableSizes.length === 1 && (
+                        <>
+                          {availableSizes[0].available && (
+                            <span className={`${style.catalogItemSize} ${style.selected}`}>
+                              {availableSizes[0].size}
                             </span>
                           )}
-                        </Fragment>
-                      ))}
+                        </>
+                      )}
+                      {availableSizes.length > 1 &&
+                        availableSizes.map((size) => (
+                          <Fragment key={size.size}>
+                            {size.available && (
+                              <span
+                                onClick={onSizeChoose}
+                                className={`${style.catalogItemSize} ${isChosen(size.size) ? style.selected : ''}`}
+                              >
+                                {size.size}
+                              </span>
+                            )}
+                          </Fragment>
+                        ))}
                     </p>
                     {hasAvailableSizes() && (
                       <div className="mb-4 d-flex gap-2 justify-content-center">
