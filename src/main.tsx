@@ -6,12 +6,15 @@ import { BrowserRouter } from 'react-router';
 import { store } from './app/store.ts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename='/bosa-noga'>
+    <BrowserRouter basename="/bosa-noga">
       <Provider store={store}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </Provider>
     </BrowserRouter>
   </StrictMode>,

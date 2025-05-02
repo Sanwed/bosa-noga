@@ -1,5 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { ProductAdvanced } from '../../types/product';
+
+interface State {
+  product: ProductAdvanced | null;
+  loading: boolean;
+  error: boolean;
+  chosenSize: string | null;
+  count: number;
+}
 
 const initialState: State = {
   product: null,
