@@ -30,7 +30,7 @@
 - Helmet
 
 ## Скриншоты
-<img width="877" alt="Screenshot 2025-05-03 at 20 00 26" src="https://github.com/user-attachments/assets/148cd5bc-759c-4e94-add4-d01f0fae359a" />
+<img width="1204" alt="Screenshot 2025-05-03 at 20 19 35" src="https://github.com/user-attachments/assets/cfad2037-1e4f-48cf-81d9-71f878413d83" />
 <img width="877" alt="Screenshot 2025-05-03 at 20 01 12" src="https://github.com/user-attachments/assets/bfae1ca0-bf8c-44b8-8ea9-f19b5cb4034b" />
 <img width="1050" alt="Screenshot 2025-05-03 at 20 01 52" src="https://github.com/user-attachments/assets/bf2efe54-9842-4e2a-94dc-ce57c7cb6a60" />
 <img width="1204" alt="Screenshot 2025-05-03 at 20 17 23" src="https://github.com/user-attachments/assets/1fa91093-6ef8-4720-aa6d-f0ffd0e7fb65" />
