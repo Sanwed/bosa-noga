@@ -10,7 +10,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/bosa-noga">
+    <BrowserRouter basename="/bosa-noga/">
       <Provider store={store}>
         <HelmetProvider>
           <App />
