@@ -10,39 +10,61 @@ import {
   FormGroup,
   Row,
   Table,
+  Modal,
 } from 'react-bootstrap';
 import { Banner, Loader } from '../../components';
 import { Link } from 'react-router';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CartRequestTypes } from '../../types/enums.ts';
 import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
+import InputMask from 'react-input-mask';
 
 function CartPage() {
-  const dispatch = useAppDispatch();
-  const { products, totalPrice, loading, orderStatus } = useAppSelector((state) => state.cart);
-  const [form, setForm] = useState({
-    phone: '',
-    address: '',
-    agreement: false,
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      phone: '',
+      address: '',
+      agreement: false,
+    },
   });
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = event.target;
-    setForm({
-      ...form,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+  const dispatch = useAppDispatch();
+  const { products, totalPrice, loading, orderStatus } = useAppSelector((state) => state.cart);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
+
+  useEffect(() => {
+    if (!loading && orderStatus === CartRequestTypes.SUCCESS) {
+      reset();
+      setShowSuccess(true);
+    } else if (!loading && orderStatus === CartRequestTypes.FAILURE) {
+      setShowFailure(true);
+    }
+  }, [loading, orderStatus]);
+
+  const onSuccessModalClose = () => {
+    setShowSuccess(false);
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onFailureModalClose = () => {
+    setShowFailure(false);
+  };
+
+  const onSubmit = (data: { phone: string; address: string; agreement: boolean }) => {
     dispatch(
       sendCartRequest({
         owner: {
-          phone: form.phone,
-          address: form.address,
+          phone: data.phone,
+          address: data.address,
         },
         items: products.map((product) => ({
           id: product.id,
@@ -51,21 +73,11 @@ function CartPage() {
         })),
       }),
     );
-    if (!loading && orderStatus === CartRequestTypes.SUCCESS) {
-      setForm({
-        phone: '',
-        address: '',
-        agreement: false,
-      });
-    }
   };
 
   const onRemove = (id: number) => {
     dispatch(removeFromCart(id));
   };
-
-  const isOrderSubmitDisabled = () =>
-    !products.length || Object.values(form).some((formValue) => !formValue);
 
   return (
     <>
@@ -126,48 +138,53 @@ function CartPage() {
             <section>
               <h2 className="text-center">Оформить заказ</h2>
               {loading && <Loader />}
-              {!loading && orderStatus === CartRequestTypes.SUCCESS && (
-                <p>Заказ успешно отправлен</p>
-              )}
-              {!loading && orderStatus === CartRequestTypes.FAILURE && (
-                <p>К сожалению произошла ошибка, попробуйте еще раз</p>
-              )}
               <Card style={{ maxWidth: '30rem', margin: '0 auto' }}>
-                <CardBody as="form" onSubmit={onSubmit}>
+                <CardBody as="form" onSubmit={handleSubmit(onSubmit)}>
                   <FormGroup className="mb-2">
                     <label htmlFor="phone">Телефон</label>
-                    <FormControl
+                    <InputMask
                       id="phone"
-                      name="phone"
-                      placeholder="Ваш телефон"
-                      onChange={onChange}
-                      value={form.phone}
+                      placeholder="+7"
+                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                      maskChar={null}
+                      mask="+7 (999) 999-99-99"
+                      {...register('phone', {
+                        required: 'Телефон обязателен',
+                        validate: (value) =>
+                          /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/.test(value) ||
+                          'Некорректный формат телефона',
+                      })}
                     />
+                    {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
                   </FormGroup>
                   <FormGroup className="mb-2">
                     <label htmlFor="address">Адрес доставки</label>
                     <FormControl
                       id="address"
-                      name="address"
                       placeholder="Адрес доставки"
-                      onChange={onChange}
-                      value={form.address}
+                      isInvalid={!!errors.address}
+                      {...register('address', {
+                        required: 'Адрес обязателен для заполнения',
+                      })}
                     />
+                    {errors.address && (
+                      <span className="text-danger">{errors.address.message}</span>
+                    )}
                   </FormGroup>
                   <FormGroup className="mb-2 d-flex gap-2">
                     <FormCheckInput
                       type="checkbox"
                       id="agreement"
-                      name="agreement"
-                      onChange={onChange}
-                      checked={form.agreement}
+                      {...register('agreement', {
+                        required: 'Обязательное поле',
+                      })}
                     />
                     <FormCheckLabel htmlFor="agreement">
                       Согласен с правилами доставки
                     </FormCheckLabel>
                   </FormGroup>
                   <Button
-                    disabled={isOrderSubmitDisabled()}
+                    disabled={!products.length || !isValid}
                     type="submit"
                     variant="outline-secondary"
                   >
@@ -179,6 +196,32 @@ function CartPage() {
           </Col>
         </Row>
       </Container>
+      <Modal show={showSuccess} onHide={onSuccessModalClose} animation={true}>
+        <Modal.Header closeButton>
+          <Modal.Title>Заказ успешно оформлен</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Ваш заказ успешно оформлен. Доставка будет произведена по адресу в течение 10 лет.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onSuccessModalClose}>
+            ОК
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showFailure} onHide={onFailureModalClose} animation={true}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ошибка оформления заказа</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Произошла ошибка при оформлении заказа. Попробуйте еще раз.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onFailureModalClose}>
+            ОК
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
