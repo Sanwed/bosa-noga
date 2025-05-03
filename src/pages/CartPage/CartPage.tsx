@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { removeFromCart, sendCartRequest } from './slice.ts';
+import { removeFromCart, sendCartRequest, resetOrderStatus } from './slice.ts';
 import {
   Button,
   Card,
@@ -21,6 +21,7 @@ import { CartRequestTypes } from '../../types/enums.ts';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import {  } from './slice.ts';
 
 function CartPage() {
   const {
@@ -49,7 +50,8 @@ function CartPage() {
     } else if (!loading && orderStatus === CartRequestTypes.FAILURE) {
       setShowFailure(true);
     }
-  }, [loading, orderStatus]);
+    dispatch(resetOrderStatus());
+  }, [loading, orderStatus, dispatch, reset]);
 
   const onSuccessModalClose = () => {
     setShowSuccess(false);

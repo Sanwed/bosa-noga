@@ -73,6 +73,9 @@ const cartSlice = createSlice({
       state.loading = false;
       state.orderStatus = CartRequestTypes.FAILURE;
     },
+    resetOrderStatus: (state) => {
+      state.orderStatus = null;
+    },
     removeAllProducts: (state) => {
       state.products = [];
       cartSlice.caseReducers.updateTotalPrice(state);
@@ -97,6 +100,7 @@ export const {
   sendCartSuccess,
   sendCartFailure,
   sendCartRequest,
+  resetOrderStatus,
   removeAllProducts,
 } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
