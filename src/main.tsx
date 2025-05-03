@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { BrowserRouter } from 'react-router';
+import { HashRouter } from 'react-router';
 import { store } from './app/store.ts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
@@ -10,12 +10,12 @@ import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/bosa-noga/">
+    <HashRouter basename="/bosa-noga/">
       <Provider store={store}>
         <HelmetProvider>
           <App />
         </HelmetProvider>
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 );
