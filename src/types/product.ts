@@ -3,23 +3,20 @@ export interface Product {
   category: number;
   title: string;
   price: number;
-  images: string[];
+  product_images: {
+    image_url: string,
+  }[];
 }
 
-export interface ProductAdvanced {
-  id: number;
-  category: number;
+export interface ProductAdvanced extends Product {
   color: string;
   heelSize: string;
-  images: string[];
   manufacturer: string;
   material: string;
-  price: number;
   reason: string;
   season: string;
-  sizes: Size[];
+  product_sizes: Size[];
   sku: string;
-  title: string;
 }
 
 export interface Size {

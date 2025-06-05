@@ -11,20 +11,44 @@ import {
   sendCatalogLoadMoreFailure,
 } from './slice.ts';
 import { RootState } from '../../app/store.ts';
+import { supabase } from '../../api/supabase';
 
 const fetchProducts = async (
   categoryId: number,
   offset: number,
   searchValue: string,
 ): Promise<Product[]> => {
-  const categoryUrl = categoryId === 11 ? '' : `categoryId=${categoryId}`;
-  const searchUrl = `q=${searchValue}`;
-  const offsetUrl = `offset=${offset}`;
+  const query = supabase
+    .from('products')
+    .select(
+      `
+        *,
+        product_images (image_url),
+        product_sizes (size, available)
+      `,
+    )
+    .range(offset, offset + 5);
 
-  const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/items?${offsetUrl}&${searchUrl}&${categoryUrl}`,
-  );
-  return await response.json();
+  if (categoryId !== 11) {
+    query.eq('category', categoryId);
+  }
+
+  if (searchValue) {
+    query.ilike('title', `%${searchValue}%`);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+
+  return data.map((product: any) => ({
+    ...product,
+    images: product.product_images?.map((img: any) => img.image_url) || [],
+    sizes: product.product_sizes || [],
+  })) as Product[];
 };
 
 function* handleFetch(action: PayloadAction<[number, boolean]>) {

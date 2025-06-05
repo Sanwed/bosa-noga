@@ -2,19 +2,36 @@ import { retry, spawn, put, takeLatest } from 'redux-saga/effects';
 import { CartRequest } from '../../types/cart.ts';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { removeAllProducts, sendCartFailure, sendCartRequest, sendCartSuccess } from './slice.ts';
+import { supabase } from '../../api/supabase.ts';
 
-const sendCartData = async (body: CartRequest) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/order`, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+export const sendCartData = async (body: CartRequest) => {
+  const { data: order, error: orderError } = await supabase
+    .from('orders')
+    .insert({
+      phone: body.owner.phone,
+      address: body.owner.address,
+    })
+    .select()
+    .single();
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+  if (orderError) {
+    throw new Error(`Ошибка при создании заказа: ${orderError.message}`);
   }
+
+  const itemsToInsert = body.items.map((item) => ({
+    order_id: order.id,
+    product_id: item.id,
+    price: item.price,
+    count: item.count,
+  }));
+
+  const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
+
+  if (itemsError) {
+    throw new Error(`Ошибка при добавлении товаров: ${itemsError.message}`);
+  }
+
+  return order;
 };
 
 function* handleFetch(action: PayloadAction<CartRequest>) {

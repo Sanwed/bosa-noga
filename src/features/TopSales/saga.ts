@@ -1,10 +1,21 @@
 import { Product } from '../../types/product.ts';
 import { retry, put, takeLatest, spawn } from 'redux-saga/effects';
 import { sendTopSalesSuccess, sendTopSalesFailure, sendTopSalesRequest } from './slice.ts';
+import { supabase } from '../../api/supabase.ts';
 
-async function fetchTopSales(): Promise<Product[]> {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/top-sales`);
-  return await response.json();
+async function fetchTopSales() {
+  const { data } = await supabase
+    .from('products')
+    .select(
+      `
+          *,
+          product_images (image_url),
+          product_sizes (size, available)
+        `,
+    )
+    .eq('top_sales', true);
+
+  return data as Product[];
 }
 
 function* handleFetch() {

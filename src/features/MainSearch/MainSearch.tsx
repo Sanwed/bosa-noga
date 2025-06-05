@@ -1,11 +1,10 @@
 import style from './MainSearch.module.css';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, KeyboardEvent } from 'react';
 import { setSearchValue, setVisibility } from './slice.ts';
 import { useNavigate } from 'react-router';
 import { setMemoizedSearch, setSearch } from '../CatalogSearch/slice.ts';
 import { sendCatalogRequest } from '../Catalog/slice.ts';
-
 interface Props {
   className?: string;
 }

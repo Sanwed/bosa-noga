@@ -1,10 +1,22 @@
 import { spawn, retry, put, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { sendProductSuccess, sendProductFailure, sendProductRequest } from './slice.ts';
+import { ProductAdvanced } from '../../types/product.ts';
+import { supabase } from '../../api/supabase.ts';
 
 const fetchProduct = async (id: string) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/items/${id}`);
-  return (await response.json()) as ProductAdvanced;
+  const { data } = await supabase
+    .from('products')
+    .select(
+      `
+        *,
+        product_images (image_url),
+        product_sizes (size, available)
+      `,
+    )
+    .eq('id', id)
+    .single();
+  return data as ProductAdvanced;
 };
 
 function* handleFetch(action: PayloadAction<string>) {

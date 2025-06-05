@@ -1,4 +1,3 @@
-import { State } from './model/category.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface State {

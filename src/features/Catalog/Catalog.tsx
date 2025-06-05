@@ -58,7 +58,7 @@ function Catalog({ hasSearch = false }: Props) {
               Что-то пошло не так во время загрузки товаров, попробуйте еще раз
             </TryAgain>
           )}
-          {!loading && !loadMoreError && lastLoadedProducts.length !== 0 && (
+          {!loading && !loadMoreError && lastLoadedProducts.length >=6 && (
             <div className="text-center">
               <Button variant="outline-primary" onClick={handleLoadMore}>
                 Загрузить ещё

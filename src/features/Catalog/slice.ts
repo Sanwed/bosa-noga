@@ -14,6 +14,7 @@ interface State {
 const initialState: State = {
   products: [],
   lastLoadedProducts: [],
+  loadMoreError: false,
   loading: false,
   error: false,
   offset: 0,

@@ -19,6 +19,7 @@ import style from './ProductPage.module.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Size } from '../../types/product.ts';
 
 function ProductPage() {
   const { productId } = useParams();
@@ -29,7 +30,7 @@ function ProductPage() {
     variant: 'danger',
     text: 'В корзину',
   });
-  const [availableSizes, setAvailableSizes] = useState<string[]>([]);
+  const [availableSizes, setAvailableSizes] = useState<Size[]>([]);
   const dispatch = useAppDispatch();
   const { product, loading, chosenSize, count, error } = useAppSelector((state) => state.product);
   const { products: cartProducts } = useAppSelector((state) => state.cart);
@@ -71,7 +72,7 @@ function ProductPage() {
 
   useEffect(() => {
     if (product) {
-      const sizes = product.sizes.filter((size) => size.available);
+      const sizes = product.product_sizes.filter((size) => size.available);
       setAvailableSizes(sizes);
       if (sizes.length === 1) {
         dispatch(chooseSize(sizes[0].size));
@@ -109,7 +110,8 @@ function ProductPage() {
     dispatch(decreaseCount());
   };
 
-  const hasAvailableSizes = () => (product ? product.sizes.some((size) => size.available) : false);
+  const hasAvailableSizes = () =>
+    product ? product.product_sizes.some((size) => size.available) : false;
   const isAddCartButtonDisabled = () => !(hasAvailableSizes() && chosenSize);
 
   return (
@@ -138,9 +140,9 @@ function ProductPage() {
                       navigation
                       pagination={{ clickable: true }}
                     >
-                      {product.images.map((image: string) => (
-                        <SwiperSlide key={image} className={style.catalogItemImage}>
-                          <img src={image} alt={product.title} />
+                      {product.product_images.map((image) => (
+                        <SwiperSlide key={image.image_url} className={style.catalogItemImage}>
+                          <img src={image.image_url} alt={product.title} />
                         </SwiperSlide>
                       ))}
                     </Swiper>
