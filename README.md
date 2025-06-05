@@ -26,6 +26,7 @@
 - Redux
 - Redux Saga
 - Helmet
+- Supabase DB
 
 ## Скриншоты
 <img width="1204" alt="Screenshot 2025-05-03 at 20 19 35" src="https://github.com/user-attachments/assets/cfad2037-1e4f-48cf-81d9-71f878413d83" />
